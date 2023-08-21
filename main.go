@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"go-file-upload/controllers"
 	"go-file-upload/database"
 	"go-file-upload/models"
@@ -8,16 +9,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load(".env")
+	config, err := godotenv.Read()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error while reading .env")
 	}
-
-	err = database.InitDatabase()
+	err = database.InitDatabase(config)
 	if err != nil {
 		log.Fatal("Error initializing database")
 	}
